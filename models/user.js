@@ -11,7 +11,7 @@ var userSchema = mongoose.Schema({
 		image: {type: String, default: ''}
 	},
 	passwordResetToken: {type: String, default: ''},
-	passwordExpire: {type: Date, default: Date.now}
+	passwordResetExpires: {type: Date, default: Date.now}
 });
 
 userSchema.methods.encryptPassword = (password) =>{
