@@ -4,17 +4,22 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var validator = require('express-validator');
 var ejs = require('ejs');
 var engine = require('ejs-mate');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
+var flash = require('connect-flash');
+var passport = require('passport');
 
 var app = express();
 
 //create database
 mongoose.connect('mongodb://localhost/rate');
 
+//
+require('./config/passport');
 
 //need to use this to display all the static files.
 app.use(express.static('public'));
@@ -32,6 +37,9 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+//add the validator after the body parser
+app.use(validator());
+
 //must add propaties, otherwise new versions of node.js or express cannot be used
 app.use(session({
 	//secret is the session ID, allows session to be passed through pages, it is the only
@@ -45,7 +53,13 @@ app.use(session({
 }));
 
 
-require('./routes/user')(app);
+//passport must be used after session, otherwise error would occur
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+require('./routes/user')(app, passport);
 
 
 app.listen(3000, function(){
