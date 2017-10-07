@@ -15,10 +15,22 @@
 
 
    <div class="text-center reg_msg">
-        <h2 class="fancy"><span>SIGN UP</span></h2>
+        <h2 class="fancy"><span>LOGIN</span></h2>
    </div><br>
 
     <div class="row signup">
+		
+		<% if(hasErrors) {%>
+            <% for(var i = 0; i <messages.length; i++) {%>
+                <div class="alert alert-danger">
+                   <a href="#" class="close" data-dismiss="alert" aria-label="close">
+                       &times;
+                   </a>
+                   <%= messages[i] %>
+                    
+                </div>
+            <% } %>
+        <% } %>
 
         <form method="POST" action="/login">
 
