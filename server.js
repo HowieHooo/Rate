@@ -18,8 +18,11 @@ var app = express();
 //create database
 mongoose.connect('mongodb://localhost/rate');
 
-//
+//load the passport framework
 require('./config/passport');
+
+//
+require('./secret/secret');
 
 //need to use this to display all the static files.
 app.use(express.static('public'));
