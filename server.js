@@ -64,6 +64,8 @@ app.use(passport.session());
 
 require('./routes/user')(app, passport);
 
+require('./routes/company')(app);
+
 
 app.listen(3000, function(){
     console.log('The server is running on Port3000 now!');
